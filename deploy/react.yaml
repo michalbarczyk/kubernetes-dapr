@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: reactapp
+  labels:
+    app: react
+spec:
+  selector:
+    app: react
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reactapp
+  labels:
+    app: react
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react
+  template:
+    metadata:
+      labels:
+        app: react
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "reactapp"
+        dapr.io/app-port: "8080"
+    spec:
+      containers:
+      - name: react-converter
+        image: zuroslaw/react-converter:latest
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always
