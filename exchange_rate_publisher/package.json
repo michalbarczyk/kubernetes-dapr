@@ -1,15 +1,18 @@
 {
-  "name": "node-subscriber",
+  "name": "node_server",
   "version": "1.0.0",
   "private": true,
-  "description": "A subscriber microservice in the Dapr pub-sub sample",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Ryan Volum",
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "isomorphic-fetch": "^2.2.1",
+    "request": "^2.88.2"
   }
 }

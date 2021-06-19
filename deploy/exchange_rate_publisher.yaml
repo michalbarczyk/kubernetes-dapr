@@ -1,0 +1,42 @@
+# kind: Service
+# apiVersion: v1
+# metadata:
+#   name: exchangeratepublisherapp
+#   labels:
+#     app: exchangeratepublisher
+# spec:
+#   selector:
+#     app: exchangeratepublisher
+#   ports:
+#   - protocol: TCP
+#     port: 80
+#     targetPort: 3000
+#   type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exchangeratepublisherapp
+  labels:
+    app: exchangeratepublisher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: exchangeratepublisher
+  template:
+    metadata:
+      labels:
+        app: exchangeratepublisher
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "exchangeratepublisherapp"
+        # dapr.io/app-port: "3000"
+    spec:
+      containers:
+      - name: node-exchange-rate-publisher
+        image: michalbarczyk/node-exchange-rate-publisher:latest
+        # ports:
+        # - containerPort: 3000
+        imagePullPolicy: Always
