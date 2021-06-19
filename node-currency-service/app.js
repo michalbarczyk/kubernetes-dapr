@@ -84,6 +84,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+require('isomorphic-fetch');
 
 const app = express();
 // Dapr publishes messages with the application/cloudevents+json content-type
@@ -91,29 +92,56 @@ app.use(bodyParser.json({ type: 'application/*+json' }));
 
 const port = 3000;
 
+
 app.get('/dapr/subscribe', (_req, res) => {
     res.json([
         {
             pubsubname: "pubsub",
-            topic: "A",
-            route: "A"
+            topic: "EUR",
+            route: "EUR"
         },
         {
             pubsubname: "pubsub",
-            topic: "B",
-            route: "B"
+            topic: "USD",
+            route: "USD"
         }
     ]);
 });
 
-app.post('/A', (req, res) => {
-    console.log("A: ", req.body.data.message);
+app.post('/EUR', (req, res) => {
+    console.log("EUR: ", req.body.data.message);
     res.sendStatus(200);
 });
 
-app.post('/B', (req, res) => {
-    console.log("B: ", req.body.data.message);
+app.post('/USD', (req, res) => {
+    console.log("USD: ", req.body.data.message);
     res.sendStatus(200);
 });
+
+
+const exchangeRateEUR = 1 / 4.46;
+const exchangeRateUSD = 1 / 3.67;
+const EUR = "EUR";
+const USD = "USD";
+
+app.post('/exchange-rate', (req, res) => {
+    console.log('got it')
+    let args = req.body;
+    const currency = args['currency']
+    const value = Number(args['value'])
+
+    let rate = 1.0
+
+    if (currency == EUR) {
+        rate = exchangeRateEUR
+    }
+
+    if (currency == USD) {
+        rate = exchangeRateUSD
+    }
+    
+    let result = value * rate;
+    res.send(result.toString());
+  });
 
 app.listen(port, () => console.log(`Node App listening on port ${port}!`));

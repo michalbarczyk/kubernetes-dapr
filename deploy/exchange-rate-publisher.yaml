@@ -1,12 +1,12 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: react-form
+  name: exchange-rate-publisher
   labels:
-    app: react-form
+    app: exchange-rate-publisher
 spec:
   selector:
-    app: react-form
+    app: exchange-rate-publisher
   ports:
   - protocol: TCP
     port: 80
@@ -17,26 +17,26 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: react-form
+  name: exchange-rate-publisher
   labels:
-    app: react-form
+    app: exchange-rate-publisher
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: react-form
+      app: exchange-rate-publisher
   template:
     metadata:
       labels:
-        app: react-form
+        app: exchange-rate-publisher
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id: "react-form"
+        dapr.io/app-id: "exchange-rate-publisher"
         dapr.io/app-port: "8080"
     spec:
       containers:
-      - name: react-form
-        image: michalbarczyk/react-form:latest
+      - name: exchange-rate-publisher
+        image: michalbarczyk/exchange-rate-publisher:latest
         ports:
         - containerPort: 8080
         imagePullPolicy: Always
