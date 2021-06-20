@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: exchange-rate-publisher
-        image: michalbarczyk/exchange-rate-publisher:latest
+        image: maciejbanas/exchange-rate-publisher:latest
         ports:
         - containerPort: 8080
         imagePullPolicy: Always

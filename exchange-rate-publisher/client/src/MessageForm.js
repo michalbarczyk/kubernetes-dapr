@@ -48,14 +48,14 @@ export class MessageForm extends React.Component {
         <div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content">
         <form onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <label>Select Message Type</label>
+          <label>Select currency type</label>
           <select className="custom-select custom-select-lg mb-3" name="messageType" onChange={this.handleInputChange} value={this.state.messageType}>
             <option value="EUR">EUR</option>
             <option value="USD">USD</option>
           </select>
         </div>
         <div className="form-group">
-          <label>Enter message</label>
+          <label>Set currency rate (e.g. 0.24)</label>
           <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" name="message" onChange={this.handleInputChange} value={this.state.message} placeholder="Enter message here"></textarea>
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
