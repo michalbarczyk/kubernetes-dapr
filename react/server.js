@@ -22,7 +22,8 @@ We invoke other Dapr enabled services by calling /v1.0/invoke/<DAPR_ID>/method/<
 */
 
 app.post('/exchange-rate', async (req, res) => {
-  const url = `${daprUrl}/nodeapp/method/exchange-rate`;
+  const url = `${daprUrl}/node-currency-service/method/exchange-rate`;
+  console.log(req)
   req.pipe(request(url)).pipe(res);
 });
 
