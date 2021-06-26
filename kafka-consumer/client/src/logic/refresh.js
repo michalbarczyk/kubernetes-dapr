@@ -1,4 +1,5 @@
 export default async function refresh() {
+  
     const rawResponse = await fetch(`/history`, {
       method: 'GET',
       headers: {

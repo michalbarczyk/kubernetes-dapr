@@ -18,12 +18,8 @@ const pubsubName = 'pubsub';
 
 const history = [];
 
-app.get('/history', (req, res) => {
-  res.send(history);
-});
-
 app.post('/sample-topic', (req, res) => {
-  console.log(req.body);
+  
   history.push(req.body)
   console.log(history);
   res.status(200).send();
