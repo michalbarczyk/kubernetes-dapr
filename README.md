@@ -20,6 +20,18 @@ redis-replicas-1   1/1     Running   0          5m43s
 redis-replicas-2   1/1     Running   0          5m31s
 ```
 
+#### 3. Setup Kafka instance:
+```
+kubectl create ns kafka
+helm install dapr-kafka bitnami/kafka --wait --namespace kafka -f ./kafka/kafka-non-persistence.yaml
+```
+Then run ```kubectl -n kafka get pods``` and verify instances are running
+```
+NAME                     READY   STATUS    RESTARTS   AGE
+dapr-kafka-0             1/1     Running   0          2m7s
+dapr-kafka-zookeeper-0   1/1     Running   0          2m57s
+```
+
 #### 3. Install [Dapr CLI](https://github.com/dapr/cli)
 #### 4. Deploy Dapr operator on Kubernetes by running `dapr init -k` (should display success message)
 #### 5. Run all services by running `kubectl apply -f ./deploy/.`
