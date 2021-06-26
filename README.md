@@ -32,8 +32,8 @@ dapr-kafka-0             1/1     Running   0          2m7s
 dapr-kafka-zookeeper-0   1/1     Running   0          2m57s
 ```
 
-#### 3. Install [Dapr CLI](https://github.com/dapr/cli)
-#### 4. Deploy Dapr operator on Kubernetes by running `dapr init -k` (should display success message)
-#### 5. Run all services by running `kubectl apply -f ./deploy/.`
-#### 6. To be able to access UI (convert currency) run `kubectl port-forward service/reactapp 8080:80` and then access it on localhost:8080
-#### 7. To be able to access UI (set exchange rate) run `kubectl port-forward service/exchange-rate-publisher 8081:80` and then access it on localhost:8081
+#### 4. Install [Dapr CLI](https://github.com/dapr/cli)
+#### 5. Deploy Dapr operator on Kubernetes by running `dapr init -k` (should display success message)
+#### 6. Run all services by running `kubectl apply -f ./deploy/.`
+#### 7. To be able to access UI (convert currency) run `kubectl port-forward service/reactapp 8080:80` and then access it on localhost:8080
+#### 8. To be able to access UI (set exchange rate) run `kubectl port-forward service/exchange-rate-publisher 8081:80` and then access it on localhost:8081
