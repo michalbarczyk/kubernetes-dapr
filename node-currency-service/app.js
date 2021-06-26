@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const request = require('request');
 
 const app = express();
 
@@ -12,6 +13,9 @@ let exchangeRateUSD = 1 / 3.67;
 const EUR = "EUR";
 const USD = "USD";
 
+const daprPort = process.env.DAPR_HTTP_PORT || 3500;
+const kafkaUrl = `http://localhost:${daprPort}/v1.0/bindings/sample-topic`;
+
 function isRequestCorrect(message) {
     console.log("Received currency rate: ", message);
     if (isNaN(message)) {
@@ -21,6 +25,14 @@ function isRequestCorrect(message) {
         console.log("This request is correct");
         return true;
     }
+}
+
+function logToKafka(message) {
+    body = { 
+        "data": message, 
+        "operation": "create"
+    }
+    request( { uri: kafkaUrl, method: 'POST', json: body } );
 }
 
 app.get('/dapr/subscribe', pubsubParser, (_req, res) => {
@@ -73,6 +85,7 @@ app.post('/exchange-rate', exRateParser, (req, res) => {
     let result = value * rate;
     console.log('Value: ', value, ' Rate: ', rate, ' Result: ', result);
     res.send(result.toString());
+    logToKafka({ "Value": value, "Rate": rate, "Result": result })
   });
 
 app.listen(port, () => console.log(`Node App listening on port ${port}!`));

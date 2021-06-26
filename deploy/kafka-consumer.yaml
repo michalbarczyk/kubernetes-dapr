@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: kafka-consumer
+  labels:
+    app: kafka-consumer
+spec:
+  selector:
+    app: kafka-consumer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-consumer
+  labels:
+    app: kafka-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-consumer
+  template:
+    metadata:
+      labels:
+        app: kafka-consumer
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "kafka-consumer"
+        dapr.io/app-port: "8080"
+    spec:
+      containers:
+      - name: kafka-consumer
+        image: michalbarczyk/kafka-consumer:latest
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always
