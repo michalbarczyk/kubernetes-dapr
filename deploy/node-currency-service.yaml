@@ -37,7 +37,7 @@ spec:
     spec:
       containers:
       - name: node-currency-service
-        image: maciejbanas/node-currency-service:latest
+        image: michalbarczyk/node-currency-service:latest
         ports:
         - containerPort: 3000
         imagePullPolicy: Always
