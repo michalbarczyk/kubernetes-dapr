@@ -22,7 +22,17 @@ redis-replicas-2   1/1     Running   0          5m31s
 ```
 #### 3. Install [Dapr CLI](https://github.com/dapr/cli)
 #### 4. Deploy Dapr operator on Kubernetes by running `dapr init -k` (should display success message)
-#### 5. Setup Kafka instance:
+#### 5. Setup Zipkin:
+Create zipkin deployment:
+```
+kubectl create deployment zipkin --image openzipkin/zipkin
+kubectl expose deployment zipkin --type ClusterIP --port 9411
+```
+To be able to access zipkin UI (at localhost:9412):
+```
+kubectl port-forward svc/zipkin 9412:9411
+```
+#### 6. Setup Kafka instance:
 ```
 kubectl create ns kafka
 helm install dapr-kafka bitnami/kafka --wait --namespace kafka -f ./kafka/kafka-non-persistence.yaml
@@ -33,18 +43,6 @@ NAME                     READY   STATUS    RESTARTS   AGE
 dapr-kafka-0             1/1     Running   0          2m7s
 dapr-kafka-zookeeper-0   1/1     Running   0          2m57s
 ```
-#### 6. Run all services by running `kubectl apply -f ./deploy/.`
-#### 7. To be able to access UI (convert currency) run `kubectl port-forward service/reactapp 8080:80` and then access it on localhost:8080
-#### 8. To be able to access UI (set exchange rate) run `kubectl port-forward service/exchange-rate-publisher 8081:80` and then access it on localhost:8081
-#### 9. (optional) to enable tracing:
-Create zipkin deployment:
-```
-kubectl create deployment zipkin --image openzipkin/zipkin
-kubectl expose deployment zipkin --type ClusterIP --port 9411
-
-kubectl apply -f ./deploy/tracing/.
-```
-To be able to access zipkin UI (at localhost:9411):
-```
-kubectl port-forward svc/zipkin 9411:9411
-```
+#### 7. Run all services by running `kubectl apply -f ./deploy/.`
+#### 8. To be able to access UI (convert currency) run `kubectl port-forward service/reactapp 8080:80` and then access it on localhost:8080
+#### 9. To be able to access UI (set exchange rate) run `kubectl port-forward service/exchange-rate-publisher 8081:80` and then access it on localhost:8081
