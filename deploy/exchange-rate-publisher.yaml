@@ -33,6 +33,7 @@ spec:
         dapr.io/enabled: "true"
         dapr.io/app-id: "exchange-rate-publisher"
         dapr.io/app-port: "8080"
+        dapr.io/config: "tracing"
     spec:
       containers:
       - name: exchange-rate-publisher
